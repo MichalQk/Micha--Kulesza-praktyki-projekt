@@ -1,0 +1,82 @@
+--Dokumentacja projektow--
+
+
+
+Działanie poszczególnych projektów:
+
+Projekt 1) Wykrywanie monet na obrazie. i zliczanie kontur.
+
+1. Importujemy bibliotekę cv2 tzw: OpenCV  (obrazy) numpy, to tablice liczbowe.
+2. Wczytujemy obraz pod nazwą coins.png z monetami. z dysku do zmiennej img.
+3. Rozmywamy obraz kolorowy, zamieniony na szary aby usunąć szum wokół obrazu.
+4. Canny -> wykrywa krawędzie metodą "Canny" Używamy progrów , a krawędzie to miejsca gdzie jasność szybko się zmienia.
+5. counters.hierarchy = cv2.findCounters  - Szuka konturów tzw: obrysów, na obrazie. 
+6. Rysujemy krawędzie za pomocą cv2.drawcounters na obrazie oryginalnym. (zrobiłem kopię dla bezpiećzenstwa)
+7. Sortujemy kontury od naj do największego.
+8. Literujemy pętlą po każdym konturzem i liczymy prostokąt obejmujący (x,y,h,w) lewy górny róg, lewy dolny szerokosc, wysokosc.
+9. Opcjonalnie: liczenie środka, ja nie zastosowałem tej metody. bo nie miałem potrzeby.
+10. Wypisujemy numer konturu, na obrazie w środku prost.
+11. Pokazujemy obraz z narysowanymi rzeczami na nim.
+12. Zamykamy program dowolnym klawiszem. 
+
+
+Cel Projektu 1):
+
+1. Znaleźć obrysy obiektów (np. monet) na zdjęciu.
+
+2. Posortować je po wielkości.
+
+3. Dla każdego obiektu podać jego prostokąt obejmujący i narysować oznaczenia na obrazie.
+
+
+
+Projekt: "2-(2)" - Trackbar
+
+1. Ładuję biblioteki: cv2 (OpenCV do obrazów), numpy (tablice liczbowe).
+2. Zamieniam obraz kolorowy na szarości — prościej i szybciej się liczy.
+3. Pusta funkcja wywoływana przy ruchu suwaka (wymagana przez createTrackbar).
+4. Tworzę okno „podglad”, które można ręcznie zmieniać rozmiarem.
+5. Suwak „blur” startuje od 9, max 31 — będzie sterował wielkością rozmycia.
+6. Pętla while true, odczytuje pozycje suwaka, i wymuszam by była nie parzysta (bo muszą być nie parzyste.)
+7. Odczytuje progi Canny
+8. Wykrywam krawędzie metodą Canny.
+9.Szukam konturów
+10. wyświetla kopie obrazu i rysuję na niej wszystkie znalezione kontury w kolorze zielonym.
+11. Pokazuje wynik w oknie z suwakami.
+
+Co ten program „ma robić”?
+
+1. Pozwala ręcznie dostroić trzy parametry: rozmycie (usuwa szum) i dwa progi Canny (co uznać za krawędź).
+
+2. Na żywo pokazuje, jakie kontury (zewnętrzne) są wykrywane na obrazie.
+
+3. Dzięki temu łatwiej dobrać ustawienia do słabego/średniego zdjęcia.
+
+
+Projekt "3": - Face detector 
+
+1. haarcascade_frontalface_default.xml') — wczytuje gotowy model Haar do detekcji twarzy z katalogu dostarczanego przez OpenCV, co eliminuje problemy ze ścieżkami plików.
+2. img = cv2.imread("face.jpg"); if img is None: raise Exception — wczytuje obraz i natychmiast sprawdza błąd, co zapobiega awarii dalszych operacji.​
+3. faces = face_cascade.detectMultiScale(img, 1.1, 4) — wykrywa twarze jako prostokąty; scaleFactor 1.1 to typowe skalowanie piramidy, minNeighbors 4 ogranicza fałszywe detekcje; zwykle wejście powinno być w skali szarości, choć OpenCV może dokonać konwersji wewnętrznie.
+4. Pętla rysująca cv2.rectangle — dla każdej wykrytej twarzy rysuje prostokąt na obrazie.
+5. cv2.imshow("face", img); if cv2.waitKey(0) & 0xFF == 27: cv2.destroyAllWindows() — pokazuje obraz w oknie i zamyka po naciśnięciu Esc.
+6. print(face_cascade.empty()) — wypisuje, czy klasyfikator jest pusty; True oznacza, że nie wczytał się poprawnie (np. zła ścieżka).
+
+Co ten program "ma robić"?
+
+Automatycznie znaleźć obszary obrazu, które wyglądają jak twarze, używając gotowego klasyfikatora Haar i funkcji detectMultiScale, 
+a następnie narysować prostokąty wokół tych obszarów na podglądzie
+
+
+Projekt "4": 
+
+1. Otwiera video cam, wykrywa pozycje kodu QR np na kartce. odczytuje z niego tekst url metodą detectAndDecode po czym rysuję ramkę i pokazuje wynik na zywo.
+2. tablica points to cztery narożniki: zamiast prostokąta często lepiej narysować linie po kolei między punktami by dokładnie zaznaczyć kształt QR
+3. Wykrywanie upewniamy się że points nie jest None bo value moze byc puste a punkty nadal zwrócone bezpieczny warunek to if points is not None and value !=
+
+Co ten program "ma robić"?
+
+Co ten program "ma robić"?
+1. Detekcja i dekodowanie kodów QR z kamery na żywo przy użyciu QRCodeDetector.detectAndDecode, z podglądem ramki wokół wykrytego kodu oraz wyświetleniem zdekodowanej treści na obrazie.
+
+
